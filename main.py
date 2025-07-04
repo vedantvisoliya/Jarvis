@@ -25,7 +25,7 @@ def speak(text):
     engine.runAndWait()
 
 # open web links
-def processCommands(command):
+def processCommands(command: str):
     if "open facebook" in command:
         webbrowser.open("https://facebook.com")
     elif "open instagram" in command:
