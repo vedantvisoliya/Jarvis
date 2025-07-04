@@ -3,12 +3,17 @@
 import speech_recognition as sr
 import pyttsx3
 import webbrowser
-import requests 
+import google.generativeai as genai
 
 from config import Settings
 
 settings = Settings()
 
+# configure api key
+genai.configure(api_key=settings.GEMINI_API_KEY)
+
+# Initialize the Gemini model 
+model = genai.GenerativeModel('gemini-2.0-flash')
 
 # initializing them
 r = sr.Recognizer()
@@ -33,7 +38,10 @@ def processCommands(command):
         webbrowser.open("https://google.com")
     elif "open github" in command:
         webbrowser.open("https://github.com")
-    
+    else:
+        response = model.generate_content(f"You are a virtual assistant named jarvis skilled in general tasks like Alexa and Google Cloud. Give short responses please for the query below\n{command}")
+        speak(response.text)
+
 print("To activate Jarvis say Jarvis and then your command.")
 speak("Initializing Jarvis...")
 while True: 
